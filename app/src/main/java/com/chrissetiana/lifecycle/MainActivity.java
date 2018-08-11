@@ -2,6 +2,7 @@ package com.chrissetiana.lifecycle;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -14,5 +15,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         lifeCycleDisplay = findViewById(R.id.lifecycle_events_display);
+
+        logEvent("onCreate");
+    }
+
+    private void logEvent(String event) {
+        lifeCycleDisplay.append(event + "\n");
+        Log.d("MainActivity", "Event: " + event);
     }
 }
