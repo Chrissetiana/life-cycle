@@ -9,6 +9,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     TextView lifeCycleDisplay;
+    private static final String LIFECYCLE_CALLBACKS_TEXT = "callbacks";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +19,13 @@ public class MainActivity extends AppCompatActivity {
         lifeCycleDisplay = findViewById(R.id.lifecycle_events_display);
 
         logEvent("onCreate");
+
+        if(savedInstanceState != null) {
+            if(savedInstanceState.containsKey(LIFECYCLE_CALLBACKS_TEXT)) {
+                String previousCallbacks = savedInstanceState.getString(LIFECYCLE_CALLBACKS_TEXT);
+                lifeCycleDisplay.setText(previousCallbacks);
+            }
+        }
     }
 
     @Override
@@ -54,6 +62,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         logEvent("onDestroy");
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        logEvent("onSaveInstanceState");
+
+        String lifeCycleEvents = lifeCycleDisplay.getText().toString();
+        outState.putString(LIFECYCLE_CALLBACKS_TEXT, lifeCycleEvents);
     }
 
     private void logEvent(String event) {
