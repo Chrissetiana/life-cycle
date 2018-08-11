@@ -54,6 +54,13 @@ public class MainActivity extends AppCompatActivity {
         logEvent("onRestart");
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        logEvent("onDestroy");
+    }
+
     private void logEvent(String event) {
         lifeCycleDisplay.append(event + "\n");
         Log.d("MainActivity", "Event: " + event);
