@@ -47,6 +47,13 @@ public class MainActivity extends AppCompatActivity {
         logEvent("onStop");
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        logEvent("onRestart");
+    }
+
     private void logEvent(String event) {
         lifeCycleDisplay.append(event + "\n");
         Log.d("MainActivity", "Event: " + event);
