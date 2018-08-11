@@ -6,10 +6,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     TextView lifeCycleDisplay;
     private static final String LIFECYCLE_CALLBACKS_TEXT = "callbacks";
+    private static final ArrayList<String> lifeCycleCallbacks = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,14 +21,20 @@ public class MainActivity extends AppCompatActivity {
 
         lifeCycleDisplay = findViewById(R.id.lifecycle_events_display);
 
-        logEvent("onCreate");
-
         if(savedInstanceState != null) {
             if(savedInstanceState.containsKey(LIFECYCLE_CALLBACKS_TEXT)) {
                 String previousCallbacks = savedInstanceState.getString(LIFECYCLE_CALLBACKS_TEXT);
                 lifeCycleDisplay.setText(previousCallbacks);
             }
         }
+
+        for (int i = lifeCycleCallbacks.size() - 1; i >= 0; i--) {
+            lifeCycleDisplay.append(lifeCycleCallbacks.get(i) + "\n");
+        }
+
+        lifeCycleCallbacks.clear();
+
+        logEvent("onCreate");
     }
 
     @Override
@@ -49,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        lifeCycleCallbacks.add(0, "onStop");
         logEvent("onStop");
     }
 
@@ -61,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        lifeCycleCallbacks.add(0, "onDestroy");
         logEvent("onDestroy");
     }
 
